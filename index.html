@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pendaftaran Turnamen Mobile Legends</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to bottom, #87ceeb, #0077cc); /* Gradasi warna biru */
+            color: #333; /* Warna teks gelap */
+        }
+
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .column {
+            background-color: #ffffff;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px;
+            text-align: center;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .small-button {
+            background-color: black;
+            color: white;
+            padding: 5px;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 12px;
+            margin-bottom: 10px;
+            position: relative;
+            z-index: 1;
+        }
+
+        label {
+            color: #4CAF50;
+        }
+
+        input[type=text] {
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            margin-bottom: 10px;
+        }
+
+        h2 {
+            background: linear-gradient(to right, #ff0000, #cc0000); /* Gradasi warna merah */
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            position: relative;
+            display: inline-block;
+        }
+
+        h2::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -2px;
+            width: 100%;
+            height: 2px;
+            background-color: #ffcc00; /* Tetap menggunakan warna garis kuning */
+        }
+
+        .checkmark {
+            width: 25px;
+            height: 25px;
+            background-color: #4CAF50;
+            border-radius: 50%;
+            display: inline-block;
+        }
+
+        .checkmark:after {
+            content: "";
+            width: 10px;
+            height: 16px;
+            border: solid white;
+            border-width: 0 3px 3px 0;
+            transform: rotate(45deg);
+            display: block;
+            margin: 6px auto;
+        }
+
+        .small-text {
+            font-size: 10px;
+            color: black;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Halaman 1: Formulir Pendaftaran Tim -->
+        <div id="halaman1" class="column">
+            <h2>Formulir Pendaftaran Turnamen Mobile Legends 2025</h2>
+            <form id="formHalaman1">
+                <label for="nama_squad">Nama Squad:</label><br>
+                <input type="text" id="nama_squad" name="nama_squad" required><br><br>
+                
+                <label for="kapten_squad">Kapten Squad:</label><br>
+                <input type="text" id="kapten_squad" name="kapten_squad" required><br><br>
+                
+                <!-- Input untuk ID Game 1-5 -->
+                <label for="id_game1">ID Game 1:</label><br>
+                <input type="text" class="id_game" name="id_game[]" required pattern="[0-9]+"><br><br>
+                
+                <label for="id_game2">ID Game 2:</label><br>
+                <input type="text" class="id_game" name="id_game[]" required pattern="[0-9]+"><br><br>
+                
+                <label for="id_game3">ID Game 3:</label><br>
+                <input type="text" class="id_game" name="id_game[]" required pattern="[0-9]+"><br><br>
+                
+                <label for="id_game4">ID Game 4:</label><br>
+                <input type="text" class="id_game" name="id_game[]" required pattern="[0-9]+"><br><br>
+                
+                <label for="id_game5">ID Game 5:</label><br>
+                <input type="text" class="id_game" name="id_game[]" required pattern="[0-9]+"><br><br>
+                
+                <label for="whatsapp">Nomor WhatsApp Kapten: +62</label><br>
+                <input type="text" id="whatsapp" name="whatsapp" required pattern="(\+62\d{9,12})"><br><br>
+
+                <!-- Kolom kecil untuk konfirmasi -->
+                <p>
+                    <input type="checkbox" id="confirmation" required>
+                    <label class="small-text" for="confirmation">Data akan dikirim ke bot Telegram sebagai pendaftar</label>
+                </p>
+                
+                <button type="submit">Selanjutnya</button>
+
+                <!-- Copyright -->
+                <footer style="margin-top: 10px;">
+                    <p>Copyright © 2025 Kutu Moba</p>
+                </footer>
+            </form>
+        </div>
+
+        <!-- Halaman 2: Konfirmasi -->
+        <div id="halaman2" class="column" style="display: none; background: linear-gradient(to bottom, #87ceeb, #0077cc);">
+            <h2>Pendaftaran Berhasil</h2>
+            <p>Turnamen gratis!</p>
+        </div>
+    </div>
+
+    <script>
+    // Tampilkan halaman berikutnya saat formulir disubmit
+    document.getElementById("formHalaman1").addEventListener("submit", function(event) {
+        event.preventDefault();
+        if (document.getElementById("confirmation").checked) {
+            document.getElementById("halaman1").style.display = "none";
+            document.getElementById("halaman2").style.display = "block";
+            kirimKeBotTelegram();
+        } else {
+            alert("Anda harus menyetujui pengiriman data ke bot Telegram");
+        }
+    });
+
+    // Fungsi untuk mengirim data ke bot Telegram
+    function kirimKeBotTelegram() {
+        var botToken = "6732572771:AAHXY3rAfGt00GwEFN64gSlKALKDgw8RxWE"; // Ganti dengan token bot Anda
+        var chatId = "1729691800"; // Ganti dengan ID obrolan (chat ID) Anda
+        var pesan = "Pendaftaran Turnamen Mobile Legends:\n";
+        pesan += "Nama Squad: " + document.getElementById("nama_squad").value + "\n";
+        pesan += "Kapten Squad: " + document.getElementById("kapten_squad").value + "\n";
+        pesan += "Anggota:\n";
+        var anggotaInputs = document.getElementsByClassName("id_game");
+        for (var i = 0; i < anggotaInputs.length; i++) {
+            pesan += "- " + anggotaInputs[i].value + "\n";
+        }
+        pesan += "Nomor WhatsApp Kapten: " + document.getElementById("whatsapp").value; // Menambahkan nomor WhatsApp
+
+        // Kirim pesan ke bot Telegram
+        fetch("https://api.telegram.org/bot" + botToken + "/sendMessage?chat_id=" + chatId + "&text=" + encodeURIComponent(pesan))
+        .then(response => response.json()) // Mengonversi respons ke JSON
+        .then(data => {
+            if (data.ok) { // Cek status pengiriman
+                console.log("Pesan berhasil dikirim ke bot Telegram.");
+                document.getElementById("halaman2").innerHTML = "<h2>Pendaftaran Berhasil</h2><p>Turnamen gratis!</p><p>Pesan berhasil dikirim ke bot Telegram.</p>";
+            } else {
+                console.error("Gagal mengirim pesan: " + data.description);
+                document.getElementById("halaman2").innerHTML = "<h2>Pendaftaran Gagal</h2><p>Terjadi masalah dalam mengirim data ke Telegram. Silakan coba lagi.</p>";
+            }
+        })
+        .catch(error => {
+            console.error("Terjadi kesalahan:", error);
+            document.getElementById("halaman2").innerHTML = "<h2>Pendaftaran Gagal</h2><p>Terjadi kesalahan teknis. Silakan periksa jaringan dan coba lagi.</p>";
+        });
+    }
+</script>
+
+</body>
+</html>
